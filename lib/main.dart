@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 var currentindex = 0;
 var pages = [
   homePage(),
-  const viewData(),
+  const ViewData(),
 ];
 
 class _MyHomePageState extends State<MyHomePage> {

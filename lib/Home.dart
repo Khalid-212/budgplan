@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:budgplan/models/data_model.dart';
+import 'package:budgplan/services/DatabaseSyncService.dart';
 import 'package:budgplan/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:connectivity/connectivity.dart';
 
 class homePage extends StatefulWidget {
   final Data? data;
