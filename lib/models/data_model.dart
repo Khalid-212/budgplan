@@ -10,6 +10,7 @@ class financeFields {
   static final String amount = 'amount';
   static final String category = 'category';
   static final String date = 'date';
+  static final String reason = 'reason';
 }
 
 class Data {
@@ -17,12 +18,14 @@ class Data {
   final int amount;
   final String category;
   final String date;
+  final String reason;
 
   const Data({
     required this.amount,
     this.id,
     required this.category,
     required this.date,
+    required this.reason,
   });
 
   Data copy({
@@ -30,12 +33,14 @@ class Data {
     int? amount,
     String? category,
     String? date,
+    String? reason,
   }) =>
       Data(
         id: id ?? this.id,
         amount: amount ?? this.amount,
         category: category ?? this.category,
         date: date ?? this.date,
+        reason: reason ?? this.reason,
       );
 
   static Data fromJson(Map<String, Object?> json) => Data(
@@ -43,6 +48,7 @@ class Data {
         amount: json[financeFields.amount] as int,
         category: json[financeFields.category] as String,
         date: json[financeFields.date] as String,
+        reason: json[financeFields.reason] as String,
       );
 
   Map<String, Object?> toJson() => {
@@ -50,5 +56,6 @@ class Data {
         financeFields.amount: amount,
         financeFields.category: category,
         financeFields.date: date,
+        financeFields.reason: reason,
       };
 }

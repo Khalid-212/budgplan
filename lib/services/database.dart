@@ -31,13 +31,15 @@ class FinanceDataBase {
     final amount = 'INTEGER NOT NULL';
     final date = 'TEXT NOT NULL';
     final category = 'TEXT NOT NULL';
+    final reason = 'TEXT NOT NULL';
 
     await db.execute('''
       CREATE TABLE $tableFinance(
         ${financeFields.id} $idType,
         ${financeFields.amount} $amount,
         ${financeFields.date} $date,
-        ${financeFields.category} $category
+        ${financeFields.category} $category,
+        ${financeFields.reason} $reason
       )
 ''');
   }
@@ -60,7 +62,7 @@ class FinanceDataBase {
 
   Future<List<Data>> readAllData() async {
     final db = await instance.database;
-    final orderBy = '${financeFields.date} ASC';
+    final orderBy = '${financeFields.date} DESC';
     final result = await db!.query(tableFinance, orderBy: orderBy);
     return result.map((json) => Data.fromJson(json)).toList();
   }
@@ -70,6 +72,8 @@ class FinanceDataBase {
     return await db!.delete(tableFinance,
         where: '${financeFields.id} = ?', whereArgs: [id]);
   }
+
+  // sync the data
 
   Future close() async {
     final db = await instance.database;

@@ -1,3 +1,5 @@
+import 'package:budgplan/Home.dart';
+import 'package:budgplan/expenceDescriptionPage.dart';
 import 'package:flutter/material.dart';
 import 'package:budgplan/services/database.dart';
 import 'package:budgplan/models/data_model.dart';
@@ -29,66 +31,137 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(0, 244, 244, 244),
-        shadowColor: const Color.fromARGB(0, 255, 193, 7),
-        foregroundColor: Colors.black,
-      ),
-      body: Center(
-        child: _isLoading
-            ? const CircularProgressIndicator()
-            : FutureBuilder<List<Data>>(
-                future: _dataList,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasData) {
-                    return ListView.builder(
+    return Center(
+      child: _isLoading
+          ? const CircularProgressIndicator()
+          : FutureBuilder<List<Data>>(
+              future: _dataList,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasData) {
+                  return SingleChildScrollView(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      // make it not scrollable
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: UniqueKey(),
-                          confirmDismiss: (_) =>
-                              _showDeleteConfirmationDialog(context),
-                          onDismissed: (direction) {
-                            FinanceDataBase.instance
-                                .delete(snapshot.data![index].id!);
-                            setState(() {
-                              snapshot.data!.removeAt(index);
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Data Deleted'),
-                              ),
-                            );
-                          },
-                          child: Card(
-                            child: ListTile(
-                              title: Text(
-                                snapshot.data![index].amount.toString(),
-                              ),
-                              subtitle: Text(
-                                snapshot.data![index].category,
-                              ),
-                              trailing: Text(
-                                snapshot.data![index].date,
+                        return GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => expenceDescriptionPage(
+                                data: snapshot.data![index],
                               ),
                             ),
                           ),
+                          child: Dismissible(
+                              key: UniqueKey(),
+                              confirmDismiss: (_) =>
+                                  _showDeleteConfirmationDialog(context),
+                              onDismissed: (direction) {
+                                FinanceDataBase.instance
+                                    .delete(snapshot.data![index].id!);
+                                setState(() {
+                                  snapshot.data!.removeAt(index);
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Data Deleted'),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                margin: const EdgeInsets.all(8),
+                                shadowColor: Color.fromARGB(95, 255, 193, 7),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        // category with its own circular avatar and amount
+                                        CircleAvatar(
+                                          backgroundColor: Colors.amber,
+                                          child: Text(
+                                            snapshot.data![index].category[0],
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              snapshot.data![index].amount
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  snapshot.data![index].date,
+                                                  style: const TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(width: 40),
+                                        // date with its own circular avatar and reason
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              snapshot.data![index].category,
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              snapshot.data![index].reason,
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )),
                         );
                       },
-                    );
-                  } else {
-                    return const Center(
-                      child: Text('No Data Available'),
-                    );
-                  }
-                },
-              ),
-      ),
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: Text('No Data Available'),
+                  );
+                }
+              },
+            ),
     );
   }
 

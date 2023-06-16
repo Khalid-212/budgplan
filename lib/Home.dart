@@ -38,6 +38,7 @@ class _homePageState extends State<homePage> {
       amount: amount,
       category: category,
       date: date,
+      reason: reason,
     );
 
     await FinanceDataBase.instance.create(data);
@@ -76,6 +77,25 @@ class _homePageState extends State<homePage> {
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Enter Amount',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) => setState(() {
+                      reason = value.toString();
+                    }),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Enter reason',
                     ),
                   ),
                 ),
