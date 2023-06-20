@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "301075130897",
+    "project_id": "budgtracker",
+    "storage_bucket": "budgtracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301075130897:android:1fc0882d073c8fcb4c1fb0",
+        "android_client_info": {
+          "package_name": "com.example.budgplan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301075130897-l5740s4rkqab605b7k88ldej8i5d7rr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnFCJqfmZ1P1D16GIp2-2L2ALeQVEUOpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301075130897-l5740s4rkqab605b7k88ldej8i5d7rr9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
