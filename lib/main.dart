@@ -23,7 +23,7 @@ Future<void> syncData() async {
     final localDatabasePath = await getDatabasesPath();
     final localDatabase = await openDatabase('$localDatabasePath/finance.db');
     final firebaseCollection =
-        FirebaseFirestore.instance.collection('FinanceData');
+        FirebaseFirestore.instance.collection('FinancedData');
 
     final records = await localDatabase.rawQuery('SELECT * FROM financeData');
 
@@ -107,10 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
               currentindex = index;
               if (index == 1) {
                 syncData();
+              } else {
+                // removeAllRecords();
               }
-              // else {
-              //   removeAllRecords();
-              // }
             });
           },
         ));
