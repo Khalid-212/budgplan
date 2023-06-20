@@ -1,4 +1,5 @@
 import 'package:budgplan/Home.dart';
+import 'package:budgplan/LoginPage.dart';
 import 'package:budgplan/View.dart';
 import 'package:budgplan/googleSignInPage.dart';
 import 'package:budgplan/onboarding_screen.dart';
@@ -79,7 +80,7 @@ var pages = [
   homePage(),
   ViewData(),
 ];
-var user = false;
+var firsttime = true;
 var onboarding = false;
 
 class _MyHomePageState extends State<MyHomePage> {

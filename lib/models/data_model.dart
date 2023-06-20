@@ -1,8 +1,5 @@
-import 'dart:convert';
-
-import 'package:budgplan/Home.dart';
-
 final String tableFinance = 'financeData';
+final String tableUser = 'userData';
 
 class financeFields {
   static final List<String> values = [id, amount, category, date];
@@ -57,5 +54,55 @@ class Data {
         financeFields.category: category,
         financeFields.date: date,
         financeFields.reason: reason,
+      };
+}
+
+// user data model
+class userFields {
+  static final List<String> values = [id, balance, name];
+  static final String id = '_id';
+  static final String balance = 'balance';
+  static final String name = 'name';
+  static final String phonenumber = 'phonenumber';
+}
+
+class UserData {
+  final int? id;
+  final int? balance;
+  final String name;
+  final int phonenumber;
+
+  const UserData({
+    this.balance,
+    this.id,
+    required this.name,
+    required this.phonenumber,
+  });
+
+  UserData copy({
+    int? id,
+    int? balance,
+    String? name,
+    int? phonenumber,
+  }) =>
+      UserData(
+        id: id ?? this.id,
+        balance: balance ?? this.balance,
+        name: name ?? this.name,
+        phonenumber: phonenumber ?? this.phonenumber,
+      );
+
+  static UserData fromJson(Map<String, Object?> json) => UserData(
+        id: json[userFields.id] as int?,
+        balance: json[userFields.balance] as int,
+        name: json[userFields.name] as String,
+        phonenumber: json[userFields.phonenumber] as int,
+      );
+
+  Map<String, Object?> toJson() => {
+        userFields.id: id,
+        userFields.balance: balance,
+        userFields.name: name,
+        userFields.phonenumber: phonenumber,
       };
 }

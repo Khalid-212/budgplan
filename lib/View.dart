@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:budgplan/PieChartPage.dart';
 import 'package:flutter/material.dart';
 import 'package:budgplan/services/database.dart';
@@ -34,6 +36,24 @@ class _ViewDataState extends State<ViewData> {
     } finally {
       setState(() => _isLoading = false);
     }
+  }
+
+  // add data to userDatabase
+  var balance;
+  var name;
+  var phonenumber;
+  Future<void> addData() async {
+    UserData userData =
+        UserData(balance: balance, name: name, phonenumber: phonenumber);
+
+    await UserDatabase.instance.create(userData);
+    print('data added');
+  }
+
+  // get data from userDatabase
+  Future<void> getUserData() async {
+    final userData = await UserDatabase.instance.readUserAllData();
+    print(userData);
   }
 
   @override
