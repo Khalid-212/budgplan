@@ -89,7 +89,7 @@ class _ListPageState extends State<ListPage> {
                                           child: Text(
                                             snapshot.data![index].category[0],
                                             style: const TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),

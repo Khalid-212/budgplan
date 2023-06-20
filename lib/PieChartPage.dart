@@ -32,8 +32,7 @@ class _PieChartPageState extends State<PieChartPage> {
     };
 
     widget.dataList.forEach((element) {
-      dataMap[element.category] =
-          dataMap[element.category]! + element.amount.toDouble();
+      dataMap[element.category] = element.amount.toDouble();
     });
   }
 
